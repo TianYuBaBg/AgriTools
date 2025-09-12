@@ -201,6 +201,13 @@
         position: relative;
         margin-bottom: 15px;
     }
+    .solo-mining {
+        background-color: #fff8e1;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #ffc107;
+    }
 </style>
 </head>
 <body>
@@ -236,6 +243,15 @@
                 <div class="form-group">
                     <label for="proxy">SOCKS5 代理：</label>
                     <input type="text" id="proxy" value="127.0.0.1:10808">
+                </div>
+
+                <div class="solo-mining">
+                    <label style="font-weight: bold; display: block; margin-bottom: 8px;">Solo挖矿模式：</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="soloMining"> 启用Solo挖矿 (--password m=solo)
+                        </label>
+                    </div>
                 </div>
 
                 <div class="checkbox-group">
@@ -518,6 +534,7 @@
                 var useTls = document.getElementById("tls").checked;
                 var useKeepalive = document.getElementById("keepalive").checked;
                 var showWindow = document.getElementById("showWindow").checked;
+                var useSolo = document.getElementById("soloMining").checked;
 
                 // 验证必要参数
                 if (!algorithm) {
@@ -542,6 +559,12 @@
                 var args = "--algorithm " + algorithm;
                 args += " --pool " + pool;
                 args += " --wallet " + fullWallet;
+
+                // 添加Solo挖矿参数
+                if (useSolo) {
+                    args += " --password m=solo";
+                    addLog("启用Solo挖矿模式 (--password m=solo)");
+                }
 
                 if (proxy) {
                     args += " --proxy " + proxy;
