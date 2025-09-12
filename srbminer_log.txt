@@ -1,51 +1,34 @@
-[2025-09-12 16:12:04] Miner version: 2.9.7
-[2025-09-12 16:12:04] OS: windows
-[2025-09-12 16:12:04] Windows version: 10.0 build 26100
-[2025-09-12 16:12:04] Platform 0: Advanced Micro Devices, Inc.
-[2025-09-12 16:12:04] Found 1 OpenCL platform/s
-[2025-09-12 16:12:04] Default OpenCL platform set to 0
-[2025-09-12 16:12:04] Found 1 GPU device/s on platform 0
-[2025-09-12 16:12:05] MSR tweaking disabled
-[2025-09-12 16:12:05] CPU0: AMD Ryzen 9 7950X 16-Core Processor  [L3:  65536 KB][L2:16384 KB][L1: 512 KB][PU: 32] | Family 25 Model 97 Stepping 2
-[2025-09-12 16:12:05] Algorithm/s: randomscash [0.85% fee]
-[2025-09-12 16:12:05] Gpu mining: disabled
-[2025-09-12 16:12:05] Cpu mining: enabled
-[2025-09-12 16:12:05] Watchdog: enabled
-[2025-09-12 16:12:05] Huge-pages: disabled
-[2025-09-12 16:12:05] HW-Aes: available
-[2025-09-12 16:12:05] Socks5 proxy: 127.0.0.1:10808
-[2025-09-12 16:12:05] Algorithm 0 available --cpu-threads-intensity values : 1
-[2025-09-12 16:12:05] Starting init of worker threads
-[2025-09-12 16:12:06] Finished init of worker threads
-[2025-09-12 16:12:06] 16 CPU core/s - 32 threads
-[2025-09-12 16:12:06] Using 32 thread/s for CPU mining
-[2025-09-12 16:12:06] NUMA node 0 total memory: 18240 MB
-[2025-09-12 16:12:06] CPU extensions detected : AVX512F|AVX512VL|AVX2|AVX|SSE42|SSE2|AES|VAES|SHA|BMI2|PCLMUL|LZCNT
-[2025-09-12 16:12:06] HTTP API disabled
-[2025-09-12 16:12:08] Socks5 proxy [127.0.0.1:10808] got a hello from us
-[2025-09-12 16:12:08] Socks5 proxy [127.0.0.1:10808] responded with hello
-[2025-09-12 16:12:08] Socks5 proxy [127.0.0.1:10808] connected to host [eu.rplant.xyz:17019] (REMOTE DNS)
-[2025-09-12 16:12:09] TLSv1.3 connection established with eu.rplant.xyz:17019 via 127.0.0.1:10808 [TLS_AES_256_GCM_SHA384]
-[2025-09-12 16:12:09] Connected to eu.rplant.xyz:17019 [0]
-[2025-09-12 16:12:10] Dataset & Cache allocator thread bound to node 0 [0 | randomscash]
-[2025-09-12 16:12:11] RX Cache   initialized on node 0 [  ] [0]
-[2025-09-12 16:12:11] RX Dataset initialized on node 0 [  ] [0]
-[2025-09-12 16:12:11] RX Initialization time on node 0 : 1300 ms [0]
-[2025-09-12 16:12:18] CPU share accepted [  323ms] [randomscash][0]
-[2025-09-12 16:12:32] CPU share accepted [  320ms] [randomscash][0]
-[2025-09-12 16:12:44] CPU share accepted [  316ms] [randomscash][0]
-[2025-09-12 16:12:46] CPU share accepted [  319ms] [randomscash][0]
-[2025-09-12 16:13:22] CPU share accepted [  318ms] [randomscash][0]
-[2025-09-12 16:13:36] CPU share accepted [  316ms] [randomscash][0]
-[2025-09-12 16:13:47] [0][randomscash]
-[2025-09-12 16:13:47] CPU: 10.95 kH/s        
-[2025-09-12 16:13:47] Total: 10.95 kH/s        
-[2025-09-12 16:13:53] CPU share accepted [  317ms] [randomscash][0]
-[2025-09-12 16:13:56] CPU share accepted [  321ms] [randomscash][0]
-[2025-09-12 16:14:13] CPU share accepted [  322ms] [randomscash][0]
-[2025-09-12 16:14:18] CPU share accepted [  317ms] [randomscash][0]
-[2025-09-12 16:14:32] [0][randomscash]
-[2025-09-12 16:14:32] CPU: 10.96 kH/s        
-[2025-09-12 16:14:32] Total: 10.96 kH/s        
-[2025-09-12 16:14:36] CPU share accepted [  317ms] [randomscash][0]
-[2025-09-12 16:14:51] CPU share accepted [  324ms] [randomscash][0]
+[2025-09-12 18:48:01] Miner version: 2.9.7
+[2025-09-12 18:48:01] OS: windows
+[2025-09-12 18:48:01] Windows version: 10.0 build 26100
+[2025-09-12 18:48:02] Platform 0: NVIDIA Corporation
+[2025-09-12 18:48:02] Platform 1: Intel(R) Corporation
+[2025-09-12 18:48:02] Found 2 OpenCL platform/s
+[2025-09-12 18:48:02] Default OpenCL platform set to 0
+[2025-09-12 18:48:02] Found 1 GPU device/s on platform 0
+[2025-09-12 18:48:02] Found 1 GPU device/s on platform 1
+[2025-09-12 18:48:02] Device 0 on platform 1 has invalid busid: -1
+[2025-09-12 18:48:03] MSR tweaking disabled
+[2025-09-12 18:48:03] CPU0: Intel(R) Core(TM) i5-10500H CPU @ 2  [L3:  12288 KB][L2: 1536 KB][L1: 192 KB][PU: 12] | Family 6 Model 165 Stepping 2
+[2025-09-12 18:48:03] Algorithm/s: randomscash [0.85% fee]
+[2025-09-12 18:48:03] Gpu mining: disabled
+[2025-09-12 18:48:03] Cpu mining: enabled
+[2025-09-12 18:48:03] Watchdog: enabled
+[2025-09-12 18:48:03] Huge-pages: enabled
+[2025-09-12 18:48:03] HW-Aes: available
+[2025-09-12 18:48:03] Socks5 proxy: 127.0.0.1:10808
+[2025-09-12 18:48:03] Algorithm 0 available --cpu-threads-intensity values : 1
+[2025-09-12 18:48:03] Starting init of worker threads
+[2025-09-12 18:48:03] Finished init of worker threads
+[2025-09-12 18:48:03] 6 CPU core/s - 12 threads
+[2025-09-12 18:48:03] Using 6 thread/s for CPU mining
+[2025-09-12 18:48:03] NUMA node 0 total memory: 1928 MB
+[2025-09-12 18:48:03] CPU extensions detected : AVX2|AVX|SSE42|SSE2|AES|BMI2|PCLMUL|LZCNT
+[2025-09-12 18:48:03] HTTP API disabled
+[2025-09-12 18:48:05] Socks5 proxy [127.0.0.1:10808] got a hello from us
+[2025-09-12 18:48:05] Socks5 proxy [127.0.0.1:10808] responded with hello
+[2025-09-12 18:48:05] Socks5 proxy [127.0.0.1:10808] connected to host [eu.rplant.xyz:17019] (REMOTE DNS)
+[2025-09-12 18:48:05] TLSv1.3 connection established with eu.rplant.xyz:17019 via 127.0.0.1:10808 [TLS_AES_256_GCM_SHA384]
+[2025-09-12 18:48:06] Connected to eu.rplant.xyz:17019 [0]
+[2025-09-12 18:48:07] Dataset & Cache allocator thread bound to node 0 [0 | randomscash]
+[2025-09-12 18:48:07] Not enough free pages to allocate 2080 MB in HP.
