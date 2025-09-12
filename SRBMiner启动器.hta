@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SRBMiner 图形化启动器 - 独立日志面板</title>
+<HTA:APPLICATION 
+    ID="SRBMinerLauncher"
+    APPLICATIONNAME="SRBMiner Launcher"
+    BORDER="thin"
+    BORDERSTYLE="normal"
+    CAPTION="yes"
+    ICON=""
+    MAXIMIZEBUTTON="yes"
+    MINIMIZEBUTTON="yes"
+    SHOWINTASKBAR="yes"
+    SINGLEINSTANCE="no"
+    SYSMENU="yes"
+    VERSION="1.0"
+    WINDOWSTATE="normal"
+    SCROLL="yes">
+<meta charset="utf-8">
+<style>
+    body {
+        font-family: Microsoft YaHei, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        overflow: hidden;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    .main-content {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+    .config-panel {
+        width: 400px;
+        background: white;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+    }
+    .log-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #1e1e1e;
+    }
+    .log-header {
+        padding: 10px;
+        background: #2d2d2d;
+        border-bottom: 1px solid #444;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+    }
+    .log-content {
+        flex: 1;
+        color: #00ff00;
+        padding: 10px;
+        font-family: Consolas, Monaco, 'Courier New', monospace;
+        font-size: 12px;
+        overflow-y: auto;
+    }
+    .log-toggle {
+        background: #444;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    h2 {
+        color: #333;
+        margin-top: 0;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input[type="text"], select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .checkbox-group {
+        margin: 10px 0;
+    }
+    .checkbox-group label {
+        display: inline-block;
+        margin-right: 15px;
+        font-weight: normal;
+    }
+    .button-group {
+        margin-top: 20px;
+        text-align: center;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #startBtn {
+        background-color: #4CAF50;
+        color: white;
+    }
+    #stopBtn {
+        background-color: #f44336;
+        color: white;
+    }
+    #exitBtn {
+        background-color: #9e9e9e;
+        color: white;
+    }
+    #clearLogBtn {
+        background-color: #ff9800;
+        color: white;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    #toggleLogBtn {
+        background-color: #666;
+        color: white;
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .status {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #e7f3fe;
+        border-left: 4px solid #2196F3;
+    }
+    .window-control {
+        background-color: #e3f2fd;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border-left: 4px solid #2196f3;
+    }
+    .error {
+        color: #ff4444;
+        background-color: #ffeeee;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #ff4444;
+    }
+    .success {
+        color: #4CAF50;
+        background-color: #eeffee;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #4CAF50;
+    }
+    .mining-stats {
+        background-color: #fff3cd;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #ffc107;
+    }
+    .log-controls {
+        display: flex;
+        align-items: center;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 左侧配置面板 -->
+            <div class="config-panel">
+                <h2>🚀 SRBMiner 配置</h2>
+                <h2>QQ交流群419240297</h2>
+                <div class="form-group">
+                    <label for="algorithm">算法：</label>
+                    <select id="algorithm">
+                        <option value="randomscash" selected>randomscash</option>
+                        <option value="verushash">verushash</option>
+                        <option value="autolykos2">autolykos2</option>
+                        <option value="ethash">ethash</option>
+                        <option value="kawpow">kawpow</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pool">矿池地址：</label>
+                    <input type="text" id="pool" value="eu.rplant.xyz:17019">
+                </div>
+
+                <div class="form-group">
+                    <label for="wallet">钱包地址：</label>
+                    <input type="text" id="wallet" value="scash1qu0ac67h9rpa4a872fkl90ujw978jdz6wc6ymx2">
+                </div>
+
+                <div class="form-group">
+                    <label for="worker">矿工号：</label>
+                    <input type="text" id="worker" value="005">
+                </div>
+
+                <div class="form-group">
+                    <label for="proxy">SOCKS5 代理：</label>
+                    <input type="text" id="proxy" value="127.0.0.1:10808">
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="tls" checked> 启用 TLS 加密
+                    </label>
+                    <label>
+                        <input type="checkbox" id="keepalive" checked> 保持连接
+                    </label>
+                </div>
+
+                <div class="window-control">
+                    <label style="font-weight: bold; display: block; margin-bottom: 8px;">命令行窗口控制：</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="radio" name="windowMode" id="showWindow" value="show"> 显示命令行窗口
+                        </label>
+                        <label>
+                            <input type="radio" name="windowMode" id="hideWindow" value="hide" checked> 隐藏命令行窗口
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="startBtn" onclick="startMining()">开始挖矿</button>
+                    <button id="stopBtn" onclick="stopMining()" disabled>停止挖矿</button>
+                    <button id="exitBtn" onclick="window.close()">退出程序</button>
+                </div>
+
+                <div class="status" id="status">就绪</div>
+                <div id="miningStats" class="mining-stats" style="display: none;">
+                    <strong>挖矿状态:</strong> <span id="miningStatus">运行中</span><br>
+                    <strong>接受份额:</strong> <span id="acceptedShares">0</span><br>
+                    <strong>最后更新:</strong> <span id="lastUpdate">-</span>
+                </div>
+                <div id="errorMessage" class="error" style="display: none;"></div>
+                <div id="successMessage" class="success" style="display: none;"></div>
+            </div>
+
+            <!-- 右侧日志容器 -->
+            <div class="log-container">
+                <div class="log-header">
+                    <h3>📋 实时日志</h3>
+                    <div class="log-controls">
+                        <button id="toggleLogBtn" onclick="toggleLog()">隐藏日志</button>
+                        <button id="clearLogBtn" onclick="clearLog()">清空日志</button>
+                    </div>
+                </div>
+                <div id="logContent" class="log-content">等待启动矿工...</div>
+            </div>
+        </div>
+    </div>
+
+    <script language="JavaScript">
+        var minerProcess, logMonitor, statsMonitor;
+        var logFile = "srbminer_log.txt";
+        var batFile = "start_miner.bat";
+        var acceptedShares = 0;
+        var startTime = null;
+        var isLogVisible = true;
+
+        // 初始化
+        window.onload = function() {
+            window.resizeTo(800, 1200);
+            document.getElementById("hideWindow").checked = true;
+        };
+
+        // 切换日志显示
+        function toggleLog() {
+            var logContent = document.getElementById("logContent");
+            var toggleBtn = document.getElementById("toggleLogBtn");
+            
+            if (isLogVisible) {
+                logContent.style.display = "none";
+                toggleBtn.textContent = "显示日志";
+                isLogVisible = false;
+            } else {
+                logContent.style.display = "block";
+                toggleBtn.textContent = "隐藏日志";
+                isLogVisible = true;
+            }
+        }
+
+        // 显示错误信息
+        function showError(message) {
+            document.getElementById("errorMessage").style.display = "block";
+            document.getElementById("errorMessage").innerHTML = message;
+            document.getElementById("successMessage").style.display = "none";
+            addLog("错误: " + message);
+        }
+
+        // 显示成功信息
+        function showSuccess(message) {
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("successMessage").innerHTML = message;
+            document.getElementById("errorMessage").style.display = "none";
+            addLog("成功: " + message);
+        }
+
+        // 更新挖矿统计
+        function updateMiningStats() {
+            document.getElementById("miningStats").style.display = "block";
+            document.getElementById("acceptedShares").innerText = acceptedShares;
+            document.getElementById("lastUpdate").innerText = new Date().toLocaleTimeString();
+        }
+
+        // 清空信息
+        function clearMessages() {
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("successMessage").style.display = "none";
+        }
+
+        // 清空日志
+        function clearLog() {
+            document.getElementById("logContent").innerHTML = "";
+            acceptedShares = 0;
+            updateMiningStats();
+        }
+
+        // 添加日志到界面
+        function addLog(message) {
+            var logDiv = document.getElementById("logContent");
+            logDiv.innerHTML = logDiv.innerHTML + message + "<br>";
+            logDiv.scrollTop = logDiv.scrollHeight;
+            
+            // 检测接受份额
+            if (message.indexOf("share accepted") > -1) {
+                acceptedShares++;
+                updateMiningStats();
+            }
+        }
+
+        // 检查矿工是否在运行
+        function isMinerRunning() {
+            try {
+                var ws = new ActiveXObject("WScript.Shell");
+                var processes = ws.Exec('tasklist /fi "imagename eq srbminer-multi.exe" /nh');
+                var output = processes.StdOut.ReadAll();
+                return output.indexOf("srbminer-multi.exe") > -1;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // 检查日志中是否有成功连接的信息
+        function checkLogForSuccess() {
+            try {
+                var fso = new ActiveXObject("Scripting.FileSystemObject");
+                if (fso.FileExists(logFile)) {
+                    var logStream = fso.OpenTextFile(logFile, 1);
+                    var content = logStream.ReadAll();
+                    logStream.Close();
+                    
+                    // 如果日志中包含这些成功信息，就认为矿工启动成功
+                    var successIndicators = [
+                        "Connected to",
+                        "connection established",
+                        "share accepted",
+                        "Job received",
+                        "Difficulty"
+                    ];
+                    
+                    for (var i = 0; i < successIndicators.length; i++) {
+                        if (content.indexOf(successIndicators[i]) > -1) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // 启动挖矿
+        function startMining() {
+            try {
+                clearMessages();
+                document.getElementById("miningStats").style.display = "none";
+                acceptedShares = 0;
+                startTime = new Date();
+                
+                // 检查矿工是否已在运行
+                if (isMinerRunning()) {
+                    showError("矿工已经在运行中！");
+                    return;
+                }
+                
+                // 获取配置参数
+                var algorithm = document.getElementById("algorithm").value;
+                var pool = document.getElementById("pool").value;
+                var wallet = document.getElementById("wallet").value;
+                var worker = document.getElementById("worker").value;
+                var proxy = document.getElementById("proxy").value;
+                var useTls = document.getElementById("tls").checked;
+                var useKeepalive = document.getElementById("keepalive").checked;
+                var showWindow = document.getElementById("showWindow").checked;
+                
+                // 验证必要参数
+                if (!pool) {
+                    showError("矿池地址不能为空！");
+                    return;
+                }
+                
+                if (!wallet) {
+                    showError("钱包地址不能为空！");
+                    return;
+                }
+                
+                // 构建完整钱包地址
+                var fullWallet = worker ? wallet + "." + worker : wallet;
+                
+                // 构建正确的命令行参数
+                var args = "--algorithm " + algorithm;
+                args += " --pool " + pool;
+                args += " --wallet " + fullWallet;
+                
+                if (proxy) {
+                    args += " --proxy " + proxy;
+                }
+                
+                if (useTls) {
+                    args += " --tls true";
+                }
+                
+                if (useKeepalive) {
+                    args += " --keepalive true";
+                }
+                
+                // 添加日志文件参数
+                args += " --log-file " + logFile + " --log-file-mode 0";
+                
+                // 更新状态
+                document.getElementById("status").innerHTML = "正在启动矿工...";
+                addLog("正在启动矿工...");
+                addLog("完整命令: srbminer-multi.exe " + args);
+                
+                // 创建批处理文件
+                var fso = new ActiveXObject("Scripting.FileSystemObject");
+                var batStream = fso.CreateTextFile(batFile, true);
+                batStream.WriteLine("@echo off");
+                batStream.WriteLine("echo 正在启动 SRBMiner...");
+                batStream.WriteLine("srbminer-multi.exe " + args);
+                batStream.WriteLine("if %errorlevel% neq 0 (");
+                batStream.WriteLine("   echo 错误: 程序退出代码 %errorlevel%");
+                batStream.WriteLine("   pause");
+                batStream.WriteLine(")");
+                batStream.Close();
+                
+                // 启动矿工
+                var ws = new ActiveXObject("WScript.Shell");
+                if (showWindow) {
+                    ws.Run('cmd /k "' + batFile + '"', 1, false);
+                } else {
+                    ws.Run('cmd /c "' + batFile + '"', 0, false);
+                }
+                
+                // 改进的启动检测：检查日志中的成功信息
+                var checkCount = 0;
+                var maxChecks = 10;
+                
+                var checkInterval = setInterval(function() {
+                    checkCount++;
+                    
+                    if (checkLogForSuccess()) {
+                        clearInterval(checkInterval);
+                        document.getElementById("status").innerHTML = "矿工已启动";
+                        document.getElementById("startBtn").disabled = true;
+                        document.getElementById("stopBtn").disabled = false;
+                        showSuccess("矿工启动成功！");
+                        addLog("检测到成功连接矿池，矿工正在运行");
+                        updateMiningStats();
+                        
+                        // 开始监控日志文件
+                        logMonitor = setInterval(checkLog, 2000);
+                        statsMonitor = setInterval(updateMiningStats, 5000);
+                    } else if (checkCount >= maxChecks) {
+                        clearInterval(checkInterval);
+                        if (isMinerRunning()) {
+                            document.getElementById("status").innerHTML = "矿工启动中...";
+                            showSuccess("矿工进程已启动，等待连接矿池");
+                            document.getElementById("startBtn").disabled = true;
+                            document.getElementById("stopBtn").disabled = false;
+                            
+                            logMonitor = setInterval(checkLog, 2000);
+                            statsMonitor = setInterval(updateMiningStats, 5000);
+                        } else {
+                            showError("矿工启动失败！请选择'显示命令行窗口'查看具体错误");
+                            document.getElementById("startBtn").disabled = false;
+                        }
+                    }
+                }, 2000);
+                
+            } catch (e) {
+                showError("启动过程中发生错误: " + e.message);
+            }
+        }
+
+        // 检查日志更新
+        function checkLog() {
+            try {
+                var fso = new ActiveXObject("Scripting.FileSystemObject");
+                if (fso.FileExists(logFile)) {
+                    var logStream = fso.OpenTextFile(logFile, 1);
+                    var content = logStream.ReadAll();
+                    logStream.Close();
+                    
+                    if (content) {
+                        var formattedContent = content.replace(/\r\n/g, "<br>");
+                        // 高亮重要信息
+                        formattedContent = formattedContent.replace(/share accepted/gi, '<span style="color: #00ff00">$&</span>');
+                        formattedContent = formattedContent.replace(/error/gi, '<span style="color: #ff4444">$&</span>');
+                        formattedContent = formattedContent.replace(/connected/gi, '<span style="color: #87ceeb">$&</span>');
+                        
+                        document.getElementById("logContent").innerHTML = formattedContent;
+                        var logDiv = document.getElementById("logContent");
+                        logDiv.scrollTop = logDiv.scrollHeight;
+                        
+                        // 更新接受份额计数
+                        var shareCount = (content.match(/share accepted/gi) || []).length;
+                        if (shareCount > acceptedShares) {
+                            acceptedShares = shareCount;
+                            updateMiningStats();
+                        }
+                    }
+                }
+            } catch (e) {
+                // 忽略日志读取错误
+            }
+        }
+
+        // 停止挖矿
+        function stopMining() {
+            try {
+                // 停止监控
+                if (logMonitor) clearInterval(logMonitor);
+                if (statsMonitor) clearInterval(statsMonitor);
+                
+                // 结束矿工进程
+                var ws = new ActiveXObject("WScript.Shell");
+                ws.Run('taskkill /f /im srbminer-multi.exe', 0, true);
+                ws.Run('taskkill /f /im cmd.exe', 0, true);
+                
+                addLog("矿工已停止");
+                document.getElementById("status").innerHTML = "矿工已停止";
+                document.getElementById("startBtn").disabled = false;
+                document.getElementById("stopBtn").disabled = true;
+                showSuccess("矿工已成功停止");
+                
+                // 清理临时文件
+                var fso = new ActiveXObject("Scripting.FileSystemObject");
+                if (fso.FileExists(batFile)) {
+                    fso.DeleteFile(batFile);
+                }
+            } catch (e) {
+                showError("停止矿工时发生错误: " + e.message);
+            }
+        }
+
+        // 程序关闭时清理
+        window.onbeforeunload = function() {
+            stopMining();
+        };
+    </script>
+</body>
+</html>
