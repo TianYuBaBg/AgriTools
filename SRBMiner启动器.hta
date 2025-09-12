@@ -208,6 +208,13 @@
         margin: 10px 0;
         border-left: 4px solid #ffc107;
     }
+    .performance-options {
+        background-color: #e8f5e9;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #4caf50;
+    }
 </style>
 </head>
 <body>
@@ -251,6 +258,18 @@
                         <label>
                             <input type="checkbox" id="soloMining"> 启用Solo挖矿 (--password m=solo)
                         </label>
+                    </div>
+                </div>
+
+                <div class="performance-options">
+                    <label style="font-weight: bold; display: block; margin-bottom: 8px;">性能优化选项：</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="largePages"> 启用大页面内存 (--enable-large-pages)
+                        </label>
+                    </div>
+                    <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                        注意：大页面内存需要管理员权限才能使用，可以提升CPU挖矿性能
                     </div>
                 </div>
 
@@ -535,6 +554,7 @@
                 var useKeepalive = document.getElementById("keepalive").checked;
                 var showWindow = document.getElementById("showWindow").checked;
                 var useSolo = document.getElementById("soloMining").checked;
+                var useLargePages = document.getElementById("largePages").checked;
 
                 // 验证必要参数
                 if (!algorithm) {
@@ -564,6 +584,12 @@
                 if (useSolo) {
                     args += " --password m=solo";
                     addLog("启用Solo挖矿模式 (--password m=solo)");
+                }
+
+                // 添加大页面内存参数
+                if (useLargePages) {
+                    args += " --enable-large-pages";
+                    addLog("启用大页面内存 (--enable-large-pages)");
                 }
 
                 if (proxy) {
@@ -676,7 +702,7 @@
                     }
                 }
             } catch (e) {
-                // 忽略日志读取错误
+                // 忽略日志读取错误123
             }
         }
 
