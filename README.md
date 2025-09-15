@@ -6,3 +6,7 @@ AgriTools
 后续会支持更多代币
 注意事项：
 1.内核使用的此为SRBMiner特性
+
+效果图
+![img.png](img.png)
+![img_1.png](img_1.png)
